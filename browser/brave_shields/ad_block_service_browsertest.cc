@@ -795,6 +795,8 @@ IN_PROC_BROWSER_TEST_F(AdBlockServiceTest,
     ASSERT_EQ(subscriptions[0].last_update_attempt, base::Time());
     ASSERT_EQ(subscriptions[0].last_successful_update_attempt, base::Time());
     ASSERT_EQ(subscriptions[0].enabled, true);
+    ASSERT_EQ(subscriptions[0].homepage, absl::nullopt);
+    ASSERT_EQ(subscriptions[0].title, absl::nullopt);
   }
 
   // Ensure that the subscription gets update attempts, and ultimately is
@@ -841,6 +843,8 @@ IN_PROC_BROWSER_TEST_F(AdBlockServiceTest,
     ASSERT_EQ(subscriptions[0].last_successful_update_attempt,
               subscriptions[0].last_update_attempt);
     ASSERT_EQ(subscriptions[0].enabled, false);
+    ASSERT_EQ(subscriptions[0].homepage, "https://example.com/list.txt");
+    ASSERT_EQ(subscriptions[0].title, "Test list");
   }
 
   EXPECT_EQ(true,
