@@ -247,17 +247,25 @@ program
 program
   .command('lint')
   .option('--base <base branch>', 'set the destination branch for the PR')
+  .option('--all_files', 'run lint on all files')
   .action(util.lint)
 
 program
   .command('pylint')
   .option('--base <base_branch>', 'only analyse files changed relative to base_branch')
+  .option('--all_files', 'run pylint on all files')
   .option('--report', 'produce a parseable report file')
   .action(pylint)
 
 program
   .command('format')
+  .option('--base <base branch>', 'set the destination branch for the PR')
   .option('--full', 'format all lines in changed files instead of only the changed lines')
+  .option('--js', 'format javascript code with clang-format')
+  .option('--rust_fmt', 'enables formatting of Rust file types using rustfmt')
+  .option(
+    '--swift_format',
+    'enables formatting of Swift file types using swift-format')
   .action(util.format)
 
 program

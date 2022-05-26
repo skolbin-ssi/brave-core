@@ -622,16 +622,33 @@ const util = {
     let cmd_options = config.defaultOptions
     cmd_options.cwd = config.braveCoreDir
     cmd_options = mergeWithDefault(cmd_options)
-    util.run('vpython', [path.join(config.braveCoreDir, 'build', 'commands', 'scripts', 'lint.py'),
-        '--project_root=' + config.srcDir,
-        '--base_branch=' + options.base], cmd_options)
+    util.run(
+        'vpython3',
+        [
+          path.join(config.depotToolsDir, 'presubmit_support.py'),
+          '--use-python3', '--upstream=' + options.base,
+          options.all_files ? '--all_files' : '',
+        ],
+        cmd_options)
   },
 
   format: (options = {}) => {
+    if (!options.base) {
+      options.base = 'origin/master'
+    }
     let cmd_options = config.defaultOptions
     cmd_options.cwd = config.braveCoreDir
     cmd_options = mergeWithDefault(cmd_options)
-    util.run('vpython', [path.join(config.braveCoreDir, 'build', 'commands', 'scripts', 'format.py'), options.full ? '--full' : ''], cmd_options)
+    util.run(
+        'git',
+        [
+          'cl', 'format', '--upstream=' + options.base,
+          options.full ? '--full' : '',
+          options.js ? '--js' : '',
+          options.rust_fmt ? '--rust-fmt' : '',
+          options.swift_format ? '--swift-format' : '',
+        ],
+        cmd_options)
   },
 
 
