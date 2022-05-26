@@ -17,7 +17,7 @@ import { createPageReducer } from '../../page/reducers/page_reducer'
 import { WalletActions } from '../../common/actions'
 
 // types
-import { PageState, WalletState } from '../../constants/types'
+import { PageState, WalletRoutes, WalletState } from '../../constants/types'
 
 // components
 import { LibContext } from '../../common/context/lib.context'
@@ -59,7 +59,7 @@ export const WalletPageStory: React.FC<React.PropsWithChildren<WalletPageStoryPr
 
   // render
   return (
-    <MemoryRouter initialEntries={['/']}>
+    <MemoryRouter initialEntries={[WalletRoutes.OnboardingWelcome]}>
       <Provider store={store}>
         <LibContext.Provider value={Lib as any}>
           {children}
