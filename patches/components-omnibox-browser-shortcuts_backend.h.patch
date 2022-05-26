@@ -1,0 +1,12 @@
+diff --git a/components/omnibox/browser/shortcuts_backend.h b/components/omnibox/browser/shortcuts_backend.h
+index e7e53e445b13b..a425eaa44ba1e 100644
+--- a/components/omnibox/browser/shortcuts_backend.h
++++ b/components/omnibox/browser/shortcuts_backend.h
+@@ -94,6 +94,7 @@ class ShortcutsBackend : public RefcountedKeyedService,
+   void AddOrUpdateShortcut(const std::u16string& text,
+                            const AutocompleteMatch& match);
+ 
++  BRAVE_SHORTCUTS_BACKEND_H
+  private:
+   friend class base::RefCountedThreadSafe<ShortcutsBackend>;
+   friend class ShortcutsBackendTest;

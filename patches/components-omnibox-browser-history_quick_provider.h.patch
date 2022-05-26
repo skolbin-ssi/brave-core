@@ -1,0 +1,12 @@
+diff --git a/components/omnibox/browser/history_quick_provider.h b/components/omnibox/browser/history_quick_provider.h
+index 7aca0c9d29a64..f8b21961994db 100644
+--- a/components/omnibox/browser/history_quick_provider.h
++++ b/components/omnibox/browser/history_quick_provider.h
+@@ -41,6 +41,7 @@ class HistoryQuickProvider : public HistoryProvider {
+   // TODO(mrossetti): Eliminate this once the HUP has been refactored.
+   static void set_disabled(bool disabled) { disabled_ = disabled; }
+ 
++  BRAVE_HISTORY_QUICK_PROVIDER_H
+  private:
+   friend class HistoryQuickProviderTest;
+   FRIEND_TEST_ALL_PREFIXES(HistoryQuickProviderTest, Spans);

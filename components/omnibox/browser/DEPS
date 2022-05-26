@@ -1,3 +1,9 @@
 include_rules = [
   "+brave/components/constants",
 ]
+
+specific_include_rules = {
+  ".*test\.cc": [
+    "+gmock/gmock.h",
+  ]
+}

@@ -1,0 +1,12 @@
+diff --git a/components/omnibox/browser/bookmark_provider.h b/components/omnibox/browser/bookmark_provider.h
+index d121dcb2d78f7..91eec08ff9571 100644
+--- a/components/omnibox/browser/bookmark_provider.h
++++ b/components/omnibox/browser/bookmark_provider.h
+@@ -46,6 +46,7 @@ class BookmarkProvider : public AutocompleteProvider {
+     bookmark_model_ = bookmark_model;
+   }
+ 
++  BRAVE_BOOKMARK_PROVIDER_H
+  private:
+   FRIEND_TEST_ALL_PREFIXES(BookmarkProviderTest, InlineAutocompletion);
+ 

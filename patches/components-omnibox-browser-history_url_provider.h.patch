@@ -1,0 +1,12 @@
+diff --git a/components/omnibox/browser/history_url_provider.h b/components/omnibox/browser/history_url_provider.h
+index 88b3ba26366df..798747d81b06f 100644
+--- a/components/omnibox/browser/history_url_provider.h
++++ b/components/omnibox/browser/history_url_provider.h
+@@ -222,6 +222,7 @@ class HistoryURLProvider : public HistoryProvider {
+                      history::HistoryBackend* backend,
+                      history::URLDatabase* db);
+ 
++  BRAVE_HISTORY_URL_PROVIDER_H
+  private:
+   FRIEND_TEST_ALL_PREFIXES(HistoryURLProviderTest, HUPScoringExperiment);
+   FRIEND_TEST_ALL_PREFIXES(HistoryURLProviderTest, DoTrimHttpScheme);

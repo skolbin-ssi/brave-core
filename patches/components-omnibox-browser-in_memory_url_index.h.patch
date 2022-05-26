@@ -1,0 +1,12 @@
+diff --git a/components/omnibox/browser/in_memory_url_index.h b/components/omnibox/browser/in_memory_url_index.h
+index 4915d2aa08040..2ae8deb27ca8c 100644
+--- a/components/omnibox/browser/in_memory_url_index.h
++++ b/components/omnibox/browser/in_memory_url_index.h
+@@ -146,6 +146,7 @@ class InMemoryURLIndex : public KeyedService,
+     return restored_;
+   }
+ 
++  BRAVE_IN_MEMORY_URL_INDEX_H
+  private:
+   friend class ::FakeAutocompleteProviderClient;
+   friend class ::HistoryQuickProviderTest;

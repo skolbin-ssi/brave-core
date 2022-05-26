@@ -55,6 +55,7 @@
 #include "components/content_settings/core/common/pref_names.h"
 #include "components/embedder_support/pref_names.h"
 #include "components/gcm_driver/gcm_buildflags.h"
+#include "components/omnibox/browser/omnibox_prefs.h"
 #include "components/password_manager/core/common/password_manager_pref_names.h"
 #include "components/policy/core/common/policy_pref_names.h"
 #include "components/pref_registry/pref_registry_syncable.h"
@@ -378,9 +379,12 @@ void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry) {
 #endif
 
   // Autocomplete in address bar
-  registry->RegisterBooleanPref(kAutocompleteEnabled, true);
-  registry->RegisterBooleanPref(kTopSiteSuggestionsEnabled, true);
-  registry->RegisterBooleanPref(kBraveSuggestedSiteSuggestionsEnabled, false);
+  registry->RegisterBooleanPref(omnibox::kAutocompleteEnabled, true);
+  registry->RegisterBooleanPref(omnibox::kTopSiteSuggestionsEnabled, true);
+  registry->RegisterBooleanPref(omnibox::kBraveSuggestedSiteSuggestionsEnabled,
+                                false);
+  registry->RegisterBooleanPref(omnibox::kHistorySuggestionsEnabled, true);
+  registry->RegisterBooleanPref(omnibox::kBookmarkSuggestionsEnabled, true);
 
   // Password leak detection should be disabled
   registry->SetDefaultPrefValue(

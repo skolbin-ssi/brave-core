@@ -1,0 +1,12 @@
+diff --git a/components/history/core/browser/history_service.h b/components/history/core/browser/history_service.h
+index 6e18bb033cf6d..16bc2f928c72a 100644
+--- a/components/history/core/browser/history_service.h
++++ b/components/history/core/browser/history_service.h
+@@ -669,6 +670,7 @@ class HistoryService : public KeyedService {
+     PRIORITY_LOW,     // Low priority things like indexing or expiration.
+   };
+ 
++  BRAVE_HISTORY_SERVICE_H
+  private:
+   class BackendDelegate;
+   friend class base::RefCountedThreadSafe<HistoryService>;

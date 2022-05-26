@@ -1,0 +1,12 @@
+diff --git a/components/omnibox/browser/search_provider.h b/components/omnibox/browser/search_provider.h
+index 642ef2a639455..60d2de08de40f 100644
+--- a/components/omnibox/browser/search_provider.h
++++ b/components/omnibox/browser/search_provider.h
+@@ -85,6 +85,7 @@ class SearchProvider : public BaseSearchProvider,
+  protected:
+   ~SearchProvider() override;
+ 
++  BRAVE_SEARCH_PROVIDER_H
+  private:
+   friend class AutocompleteProviderTest;
+   friend class BaseSearchProviderTest;
