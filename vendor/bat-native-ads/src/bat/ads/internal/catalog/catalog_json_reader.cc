@@ -14,6 +14,7 @@
 #include "bat/ads/ads.h"
 #include "bat/ads/internal/ads_client_helper.h"
 #include "bat/ads/internal/base/logging_util.h"
+#include "bat/ads/internal/base/url_util.h"
 #include "bat/ads/internal/catalog/campaign/catalog_campaign_info.h"
 #include "bat/ads/internal/catalog/catalog_info.h"
 #include "bat/ads/internal/deprecated/json/json_helper.h"
@@ -169,7 +170,8 @@ absl::optional<CatalogInfo> ReadCatalog(const std::string& json) {
           creative.payload.body = payload["body"].GetString();
           creative.payload.title = payload["title"].GetString();
           creative.payload.target_url = GURL(payload["targetUrl"].GetString());
-          if (!creative.payload.target_url.is_valid()) {
+          if (!creative.payload.target_url.is_valid() ||
+              !SchemeIsSupported(creative.payload.target_url)) {
             BLOG(1, "Invalid target URL for creative instance id "
                         << creative_instance_id);
             continue;
@@ -191,7 +193,8 @@ absl::optional<CatalogInfo> ReadCatalog(const std::string& json) {
           creative.payload.title = payload["title"].GetString();
           creative.payload.description = payload["description"].GetString();
           creative.payload.image_url = GURL(payload["imageUrl"].GetString());
-          if (!creative.payload.image_url.is_valid()) {
+          if (!creative.payload.image_url.is_valid() ||
+              !SchemeIsSupported(creative.payload.image_url)) {
             BLOG(1, "Invalid image URL for creative instance id "
                         << creative_instance_id);
             continue;
@@ -199,7 +202,8 @@ absl::optional<CatalogInfo> ReadCatalog(const std::string& json) {
           creative.payload.dimensions = payload["dimensions"].GetString();
           creative.payload.cta_text = payload["ctaText"].GetString();
           creative.payload.target_url = GURL(payload["targetUrl"].GetString());
-          if (!creative.payload.target_url.is_valid()) {
+          if (!creative.payload.target_url.is_valid() ||
+              !SchemeIsSupported(creative.payload.target_url)) {
             BLOG(1, "Invalid target URL for creative instance id "
                         << creative_instance_id);
             continue;
@@ -225,7 +229,8 @@ absl::optional<CatalogInfo> ReadCatalog(const std::string& json) {
           creative.payload.alt = logo["alt"].GetString();
           creative.payload.target_url =
               GURL(logo["destinationUrl"].GetString());
-          if (!creative.payload.target_url.is_valid()) {
+          if (!creative.payload.target_url.is_valid() ||
+              !SchemeIsSupported(creative.payload.target_url)) {
             BLOG(1, "Invalid target URL for creative instance id "
                         << creative_instance_id);
             continue;
@@ -258,7 +263,8 @@ absl::optional<CatalogInfo> ReadCatalog(const std::string& json) {
           creative.payload.title = payload["title"].GetString();
           creative.payload.description = payload["description"].GetString();
           creative.payload.target_url = GURL(payload["feed"].GetString());
-          if (!creative.payload.target_url.is_valid()) {
+          if (!creative.payload.target_url.is_valid() ||
+              !SchemeIsSupported(creative.payload.target_url)) {
             BLOG(1, "Invalid target URL for creative instance id "
                         << creative_instance_id);
             continue;

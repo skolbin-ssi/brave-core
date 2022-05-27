@@ -14,6 +14,183 @@
 
 namespace ads {
 
+TEST(BatAdsUrlUtilTest, HttpsScheme) {
+  // Arrange
+  const GURL url = GURL("https://foobar.com");
+
+  // Act
+  const bool is_supported = SchemeIsSupported(url);
+
+  // Assert
+  EXPECT_TRUE(is_supported);
+}
+
+TEST(BatAdsUrlUtilTest, HttpScheme) {
+  // Arrange
+  const GURL url = GURL("http://foobar.com");
+
+  // Act
+  const bool is_supported = SchemeIsSupported(url);
+
+  // Assert
+  EXPECT_FALSE(is_supported);
+}
+
+TEST(BatAdsUrlUtilTest, BraveSchemeWithFooBar) {
+  // Arrange
+  const GURL url = GURL("brave://foobar");
+
+  // Act
+  const bool is_supported = SchemeIsSupported(url);
+
+  // Assert
+  EXPECT_FALSE(is_supported);
+}
+
+TEST(BatAdsUrlUtilTest, BraveSchemeWithWallet) {
+  // Arrange
+  const GURL url = GURL("brave://wallet");
+
+  // Act
+  const bool is_supported = SchemeIsSupported(url);
+
+  // Assert
+  EXPECT_TRUE(is_supported);
+}
+
+TEST(BatAdsUrlUtilTest, BraveSchemeWithWalletX) {
+  // Arrange
+  const GURL url = GURL("brave://walletx");
+
+  // Act
+  const bool is_supported = SchemeIsSupported(url);
+
+  // Assert
+  EXPECT_FALSE(is_supported);
+}
+
+TEST(BatAdsUrlUtilTest, BraveSchemeWithWalletAndPath) {
+  // Arrange
+  const GURL url = GURL("brave://wallet/foo");
+
+  // Act
+  const bool is_supported = SchemeIsSupported(url);
+
+  // Assert
+  EXPECT_TRUE(is_supported);
+}
+
+TEST(BatAdsUrlUtilTest, BraveSchemeWithSync) {
+  // Arrange
+  const GURL url = GURL("brave://sync");
+
+  // Act
+  const bool is_supported = SchemeIsSupported(url);
+
+  // Assert
+  EXPECT_TRUE(is_supported);
+}
+
+TEST(BatAdsUrlUtilTest, BraveSchemeWithSyncX) {
+  // Arrange
+  const GURL url = GURL("brave://syncx");
+
+  // Act
+  const bool is_supported = SchemeIsSupported(url);
+
+  // Assert
+  EXPECT_FALSE(is_supported);
+}
+
+TEST(BatAdsUrlUtilTest, BraveSchemeWitSyncAndPath) {
+  // Arrange
+  const GURL url = GURL("brave://sync/foo");
+
+  // Act
+  const bool is_supported = SchemeIsSupported(url);
+
+  // Assert
+  EXPECT_TRUE(is_supported);
+}
+
+TEST(BatAdsUrlUtilTest, BraveSchemeWithRewards) {
+  // Arrange
+  const GURL url = GURL("brave://rewards");
+
+  // Act
+  const bool is_supported = SchemeIsSupported(url);
+
+  // Assert
+  EXPECT_TRUE(is_supported);
+}
+
+TEST(BatAdsUrlUtilTest, BraveSchemeWithRewardsX) {
+  // Arrange
+  const GURL url = GURL("brave://rewardsx");
+
+  // Act
+  const bool is_supported = SchemeIsSupported(url);
+
+  // Assert
+  EXPECT_FALSE(is_supported);
+}
+
+TEST(BatAdsUrlUtilTest, BraveSchemeWithRewardsAndPath) {
+  // Arrange
+  const GURL url = GURL("brave://rewards/foo");
+
+  // Act
+  const bool is_supported = SchemeIsSupported(url);
+
+  // Assert
+  EXPECT_TRUE(is_supported);
+}
+
+TEST(BatAdsUrlUtilTest, BraveSchemeWithSearchEngineSettings) {
+  // Arrange
+  const GURL url = GURL("brave://settings/searchEngines");
+
+  // Act
+  const bool is_supported = SchemeIsSupported(url);
+
+  // Assert
+  EXPECT_TRUE(is_supported);
+}
+
+TEST(BatAdsUrlUtilTest, BraveSchemeWithSearchEngineSettingsX) {
+  // Arrange
+  const GURL url = GURL("brave://settings/searchEnginesx");
+
+  // Act
+  const bool is_supported = SchemeIsSupported(url);
+
+  // Assert
+  EXPECT_FALSE(is_supported);
+}
+
+TEST(BatAdsUrlUtilTest,
+     BraveSchemeWithSearchEngineSettingsAndPath) {
+  // Arrange
+  const GURL url = GURL("brave://setings/searchEngines/");
+
+  // Act
+  const bool is_supported = SchemeIsSupported(url);
+
+  // Assert
+  EXPECT_FALSE(is_supported);
+}
+
+TEST(BatAdsUrlUtilTest, FileScheme) {
+  // Arrange
+  const GURL url = GURL("file://foobar");
+
+  // Act
+  const bool is_supported = SchemeIsSupported(url);
+
+  // Assert
+  EXPECT_FALSE(is_supported);
+}
+
 TEST(BatAdsUrlUtilTest, UrlMatchesPatternWithNoWildcards) {
   // Arrange
   const GURL url = GURL("https://www.foo.com/");
