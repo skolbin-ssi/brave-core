@@ -45,7 +45,15 @@ void BodySnifferURLLoader::Start(
   source_url_client_receiver_.Bind(std::move(source_url_client_receiver),
                                    task_runner_);
   if (body) {
-    OnStartLoadingResponseBody(std::move(body));
+    VLOG(2) << __func__ << " " << response_url_;
+    state_ = State::kLoading;
+    body_consumer_handle_ = std::move(body);
+    body_consumer_watcher_.Watch(
+        body_consumer_handle_.get(),
+        MOJO_HANDLE_SIGNAL_READABLE | MOJO_HANDLE_SIGNAL_PEER_CLOSED,
+        base::BindRepeating(&BodySnifferURLLoader::OnBodyReadable,
+                            base::Unretained(this)));
+    body_consumer_watcher_.ArmOrNotify();
   }
 }
 
@@ -84,19 +92,6 @@ void BodySnifferURLLoader::OnReceiveCachedMetadata(mojo_base::BigBuffer data) {
 
 void BodySnifferURLLoader::OnTransferSizeUpdated(int32_t transfer_size_diff) {
   destination_url_loader_client_->OnTransferSizeUpdated(transfer_size_diff);
-}
-
-void BodySnifferURLLoader::OnStartLoadingResponseBody(
-    mojo::ScopedDataPipeConsumerHandle body) {
-  VLOG(2) << __func__ << " " << response_url_;
-  state_ = State::kLoading;
-  body_consumer_handle_ = std::move(body);
-  body_consumer_watcher_.Watch(
-      body_consumer_handle_.get(),
-      MOJO_HANDLE_SIGNAL_READABLE | MOJO_HANDLE_SIGNAL_PEER_CLOSED,
-      base::BindRepeating(&BodySnifferURLLoader::OnBodyReadable,
-                          base::Unretained(this)));
-  body_consumer_watcher_.ArmOrNotify();
 }
 
 void BodySnifferURLLoader::OnComplete(
@@ -212,8 +207,8 @@ void BodySnifferURLLoader::CompleteLoading(std::string body) {
                           base::Unretained(this)));
 
   // Send deferred message.
-  destination_url_loader_client_->OnStartLoadingResponseBody(
-      std::move(body_to_send));
+  destination_url_loader_client_->OnReceiveResponse(
+      network::mojom::URLResponseHead::New(), std::move(body_to_send));
 
   if (bytes_remaining_in_buffer_) {
     SendReceivedBodyToClient();
