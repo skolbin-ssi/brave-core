@@ -5,7 +5,6 @@
 
 #include "brave/browser/ui/views/translate/brave_translate_bubble_view.h"
 
-#include "brave/components/translate/core/common/brave_translate_features.h"
 #include "brave/components/translate/core/common/buildflags.h"
 #include "brave/grit/brave_generated_resources.h"
 #include "chrome/grit/generated_resources.h"
@@ -17,18 +16,6 @@ int TranslateBubbleView_ChromiumImpl::GetTitleBeforeTranslateTitle() {
 #else
   return IDS_TRANSLATE_BUBBLE_BEFORE_TRANSLATE_TITLE;
 #endif
-}
-
-// static
-template <typename... Args>
-TranslateBubbleView_ChromiumImpl*
-TranslateBubbleView_ChromiumImpl::MakeTranslateBubbleView(Args&&... args) {
-#if BUILDFLAG(ENABLE_BRAVE_TRANSLATE_EXTENSION)
-  if (translate::IsTranslateExtensionAvailable()) {
-    return new BraveTranslateBubbleView(std::forward<Args>(args)...);
-  }
-#endif  // BUILDFLAG(ENABLE_BRAVE_TRANSLATE_EXTENSION)
-  return new TranslateBubbleView(std::forward<Args>(args)...);
 }
 
 std::unique_ptr<views::ImageView> TranslateBubbleView::CreateTranslateIcon() {
