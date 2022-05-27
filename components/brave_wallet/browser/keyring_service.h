@@ -279,6 +279,7 @@ class KeyringService : public KeyedService, public mojom::KeyringService {
                            AccountMetasForFilecoinKeyring);
   FRIEND_TEST_ALL_PREFIXES(KeyringServiceUnitTest,
                            SwitchAccountsOnNetworkChange);
+  FRIEND_TEST_ALL_PREFIXES(KeyringServiceUnitTest, AccountsAdded);
 
   FRIEND_TEST_ALL_PREFIXES(KeyringServiceAccountDiscoveryUnitTest,
                            AccountDiscovery);
@@ -349,6 +350,9 @@ class KeyringService : public KeyedService, public mojom::KeyringService {
                            const std::string& password);
 
   void NotifyAccountsChanged();
+  void NotifyAccountsAdded(
+      const std::vector<mojom::AccountInfoPtr> account_infos);
+  // void NotifyAccountsRemoved();
   void StopAutoLockTimer();
   void ResetAutoLockTimer();
   void OnAutoLockPreferenceChanged();
