@@ -21,5 +21,6 @@ export const mockPageState: PageState = {
   showAddModal: false,
   showIsRestoring: false,
   showRecoveryPhrase: false,
-  mnemonic: mockedMnemonic
+  mnemonic: mockedMnemonic,
+  isImportWalletsCheckComplete: false
 }

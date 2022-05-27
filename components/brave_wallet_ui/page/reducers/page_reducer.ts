@@ -34,7 +34,8 @@ const defaultState: PageState = {
   showIsRestoring: false,
   setupStillInProgress: false,
   isCryptoWalletsInitialized: false,
-  isMetaMaskInitialized: false
+  isMetaMaskInitialized: false,
+  isImportWalletsCheckComplete: false
 }
 
 export const createPageReducer = (initialState: PageState) => {
@@ -169,6 +170,14 @@ export const createPageReducer = (initialState: PageState) => {
       isMetaMaskInitialized: payload
     }
   })
+
+  reducer.on(Actions.setImportWalletsCheckComplete, (state: PageState, payload: boolean): PageState => {
+    return {
+      ...state,
+      isImportWalletsCheckComplete: payload
+    }
+  })
+
   return reducer
 }
 
