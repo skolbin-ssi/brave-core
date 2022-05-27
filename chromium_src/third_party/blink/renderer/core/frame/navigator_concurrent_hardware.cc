@@ -53,4 +53,9 @@ unsigned NavigatorConcurrentHardware::hardwareConcurrency(
   return brave::FarbleNumberOfProcessors(context);
 }
 
+unsigned NavigatorConcurrentHardware::hardwareConcurrency_ChromiumImpl() const {
+  NOTREACHED();
+  return 0;
+}
+
 }  // namespace blink

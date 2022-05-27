@@ -11,7 +11,9 @@
 #include "third_party/blink/renderer/core/loader/frame_loader.h"
 
 #define userAgent userAgent_ChromiumImpl
+#define hardwareConcurrency hardwareConcurrency_ChromiumImpl
 #include "src/third_party/blink/renderer/core/execution_context/navigator_base.cc"
+#undef hardwareConcurrency
 #undef userAgent
 
 namespace blink {
@@ -26,6 +28,15 @@ String NavigatorBase::userAgent() const {
   }
 
   return userAgent_ChromiumImpl();
+}
+
+unsigned NavigatorBase::hardwareConcurrency(ScriptState* script_state) const {
+  unsigned hardware_concurrency =
+      NavigatorConcurrentHardware::hardwareConcurrency(script_state);
+
+  probe::ApplyHardwareConcurrencyOverride(
+      probe::ToCoreProbeSink(GetExecutionContext()), hardware_concurrency);
+  return hardware_concurrency;
 }
 
 }  // namespace blink

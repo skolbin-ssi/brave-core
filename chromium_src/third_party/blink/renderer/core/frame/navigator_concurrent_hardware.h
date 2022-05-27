@@ -14,7 +14,8 @@ class ScriptState;
 
 class CORE_EXPORT NavigatorConcurrentHardware {
  public:
-  unsigned hardwareConcurrency(ScriptState*) const;
+  virtual unsigned hardwareConcurrency(ScriptState*) const;
+  virtual unsigned hardwareConcurrency_ChromiumImpl() const;
 };
 
 }  // namespace blink
