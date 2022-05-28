@@ -6,6 +6,7 @@
 #include "brave/common/importer/chrome_importer_utils.h"
 
 #include <memory>
+#include <utility>
 
 #include "base/values.h"
 #include "base/files/file_path.h"
@@ -77,10 +78,10 @@ base::ListValue* GetChromeSourceProfiles(
     user_data_folder.Append(
       base::FilePath::StringType(FILE_PATH_LITERAL("Local State")));
   if (!base::PathExists(local_state_path)) {
-      base::DictionaryValue* entry = new base::DictionaryValue();
-      entry->SetString("id", "Default");
-      entry->SetString("name", "Default");
-      profiles->Append(std::unique_ptr<base::DictionaryValue>(entry));
+    base::Value::Dict entry;
+    entry.Set("id", "Default");
+    entry.Set("name", "Default");
+    profiles->Append(std::move(entry));
   } else {
     std::string local_state_content;
     base::ReadFileToString(local_state_path, &local_state_content);
@@ -101,10 +102,10 @@ base::ListValue* GetChromeSourceProfiles(
             continue;
           std::string name;
           profile->GetString("name", &name);
-          base::DictionaryValue* entry = new base::DictionaryValue();
-          entry->SetString("id", it.key());
-          entry->SetString("name", name);
-          profiles->Append(std::unique_ptr<base::DictionaryValue>(entry));
+          base::Value::Dict entry;
+          entry.Set("id", it.key());
+          entry.Set("name", name);
+          profiles->Append(std::move(entry));
         }
       }
     }

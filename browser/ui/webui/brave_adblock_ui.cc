@@ -298,19 +298,19 @@ void AdblockDOMHandler::RefreshSubscriptionsList() {
   auto list_subscriptions = g_brave_browser_process->ad_block_service()
                                 ->subscription_service_manager()
                                 ->GetSubscriptions();
-  auto list_value = std::make_unique<base::ListValue>();
+  base::Value::List list_value;
   for (const auto& subscription : list_subscriptions) {
-    auto dict = std::make_unique<base::DictionaryValue>();
-    dict->SetStringKey("subscription_url",
-                       subscription.subscription_url.spec());
-    dict->SetBoolKey("enabled", subscription.enabled);
-    dict->SetDoubleKey("last_update_attempt",
-                       subscription.last_update_attempt.ToJsTime());
-    dict->SetDoubleKey("last_successful_update_attempt",
-                       subscription.last_successful_update_attempt.ToJsTime());
-    list_value->Append(std::move(dict));
+    base::Value::Dict dict;
+    dict.Set("subscription_url", subscription.subscription_url.spec());
+    dict.Set("enabled", subscription.enabled);
+    dict.Set("last_update_attempt",
+             subscription.last_update_attempt.ToJsTime());
+    dict.Set("last_successful_update_attempt",
+             subscription.last_successful_update_attempt.ToJsTime());
+    list_value.Append(std::move(dict));
   }
-  CallJavascriptFunction("brave_adblock.onGetListSubscriptions", *list_value);
+  CallJavascriptFunction("brave_adblock.onGetListSubscriptions",
+                         base::Value(std::move(list_value)));
 }
 
 }  // namespace

@@ -326,13 +326,13 @@ AdBlockRegionalServiceManager::GetRegionalLists() {
   for (const auto& region_list : regional_catalog_) {
     // Most settings come directly from the regional catalog from
     // https://github.com/brave/adblock-resources
-    auto dict = std::make_unique<base::DictionaryValue>();
-    dict->SetString("uuid", region_list.uuid);
-    dict->SetString("url", region_list.url);
-    dict->SetString("title", region_list.title);
-    dict->SetString("support_url", region_list.support_url);
-    dict->SetString("component_id", region_list.component_id);
-    dict->SetString("base64_public_key", region_list.base64_public_key);
+    base::Value::Dict dict;
+    dict.Set("uuid", region_list.uuid);
+    dict.Set("url", region_list.url);
+    dict.Set("title", region_list.title);
+    dict.Set("support_url", region_list.support_url);
+    dict.Set("component_id", region_list.component_id);
+    dict.Set("base64_public_key", region_list.base64_public_key);
     // However, the enabled/disabled flag is maintained in our
     // local_state preferences so retrieve it from there
     bool enabled = false;
@@ -346,7 +346,7 @@ AdBlockRegionalServiceManager::GetRegionalLists() {
     } else if (regional_filter_dict) {
       enabled = regional_filter_dict->FindBoolKey("enabled").value_or(false);
     }
-    dict->SetBoolean("enabled", enabled);
+    dict.Set("enabled", enabled);
 
     list_value->Append(std::move(dict));
   }
