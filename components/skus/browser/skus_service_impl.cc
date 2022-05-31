@@ -57,6 +57,16 @@ void OnCredentialSummary(skus::CredentialSummaryCallbackState* callback_state,
   delete callback_state;
 }
 
+void OnSubmitReceipt(skus::CredentialSummaryCallbackState* callback_state,
+                     skus::SkusResult result,
+                     rust::cxxbridge1::Str summary) {
+  // TODO(bsclifton): fill me in
+  // TODO(bsclifton): put actual args in here (needs update in shim.h also)
+  if (callback_state->cb) {
+  }
+  delete callback_state;
+}
+
 }  // namespace
 
 namespace skus {
@@ -130,7 +140,10 @@ void SkusServiceImpl::CredentialSummary(
 void SubmitReceipt(const std::string& order_id,
                    const std::string& receipt,
                    skus::mojom::SkusService::SubmitReceiptCallback callback) {
-  // TODO: ...
+  std::unique_ptr<skus::SubmitReceiptCallbackState> cbs(
+      new skus::SubmitReceiptCallbackState);
+  cbs->cb = std::move(callback);
+  sdk_->submit_receipt(OnSubmitReceipt, std::move(cbs), order_id, receipt);
 }
 
 void SkusServiceImpl::OnCredentialSummary(
