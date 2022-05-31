@@ -127,6 +127,12 @@ void SkusServiceImpl::CredentialSummary(
   sdk_->credential_summary(::OnCredentialSummary, std::move(cbs), domain);
 }
 
+void SubmitReceipt(const std::string& order_id,
+                   const std::string& receipt,
+                   skus::mojom::SkusService::SubmitReceiptCallback callback) {
+  // TODO: ...
+}
+
 void SkusServiceImpl::OnCredentialSummary(
     const std::string& domain,
     mojom::SkusService::CredentialSummaryCallback callback,
