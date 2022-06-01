@@ -14,7 +14,7 @@ namespace features {
 const base::Feature kNativeBraveWalletFeature{"NativeBraveWallet",
                                               base::FEATURE_ENABLED_BY_DEFAULT};
 const base::Feature kBraveWalletFilecoinFeature{
-    "BraveWalletFilecoin", base::FEATURE_DISABLED_BY_DEFAULT};
+    "BraveWalletFilecoin", base::FEATURE_ENABLED_BY_DEFAULT};
 
 const base::Feature kBraveWalletSolanaFeature{
 #if BUILDFLAG(IS_ANDROID)
