@@ -166,6 +166,10 @@ class TxService : public KeyedService,
       MakeTokenProgramTransferTxDataCallback callback) override;
   void GetEstimatedTxFee(const std::string& tx_meta_id,
                          GetEstimatedTxFeeCallback callback) override;
+  void ProcessSolanaHardwareSignature(
+      const std::string& tx_meta_id,
+      const std::string& signed_message,
+      ProcessSolanaHardwareSignatureCallback callback) override;
 
   // mojom::FilTxManagerProxy
   void ProcessFilHardwareSignature(

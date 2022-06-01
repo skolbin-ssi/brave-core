@@ -8,6 +8,7 @@
 #include <memory>
 #include <utility>
 
+#include "base/base64.h"
 #include "base/notreached.h"
 #include "brave/components/brave_wallet/browser/json_rpc_service.h"
 #include "brave/components/brave_wallet/browser/solana_block_tracker.h"
@@ -17,6 +18,7 @@
 #include "brave/components/brave_wallet/browser/solana_tx_state_manager.h"
 #include "brave/components/brave_wallet/common/brave_wallet_constants.h"
 #include "brave/components/brave_wallet/common/brave_wallet_types.h"
+#include "brave/components/brave_wallet/common/solana_utils.h"
 #include "components/grit/brave_components_strings.h"
 #include "ui/base/l10n/l10n_util.h"
 
@@ -244,10 +246,21 @@ void SolanaTxManager::RetryTransaction(const std::string& tx_meta_id,
   NOTIMPLEMENTED();
 }
 
+// Called by the frontend in /brave_wallet_ui/common/async/hardware.ts
+// to pass to ledger to sign
 void SolanaTxManager::GetTransactionMessageToSign(
     const std::string& tx_meta_id,
     GetTransactionMessageToSignCallback callback) {
-  NOTIMPLEMENTED();
+  std::unique_ptr<SolanaTxMeta> meta =
+      GetSolanaTxStateManager()->GetSolanaTx(tx_meta_id);
+  if (!meta || !meta->tx()) {
+    VLOG(1) << __FUNCTION__ << "No transaction found with id:" << tx_meta_id;
+    std::move(callback).Run(absl::nullopt);
+    return;
+  }
+
+  // TODO(nvonpentz) update interface and pass bytes not base64
+  std::move(callback).Run(meta->tx()->GetBase64EncodedMessage());
 }
 
 void SolanaTxManager::MakeSystemProgramTransferTxData(
@@ -438,6 +451,51 @@ SolanaBlockTracker* SolanaTxManager::GetSolanaBlockTracker() {
 std::unique_ptr<SolanaTxMeta> SolanaTxManager::GetTxForTesting(
     const std::string& tx_meta_id) {
   return GetSolanaTxStateManager()->GetSolanaTx(tx_meta_id);
+}
+
+void SolanaTxManager::ProcessSolanaHardwareSignature(
+    const std::string& tx_meta_id,
+    const std::string& signature,
+    ProcessSolanaHardwareSignatureCallback callback) {
+  std::unique_ptr<SolanaTxMeta> meta =
+      GetSolanaTxStateManager()->GetSolanaTx(tx_meta_id);
+  if (!meta) {
+    std::move(callback).Run(
+        false,
+        mojom::ProviderErrorUnion::NewSolanaProviderError(
+            mojom::SolanaProviderError::kInternalError),
+        l10n_util::GetStringUTF8(IDS_BRAVE_WALLET_TRANSACTION_NOT_FOUND));
+    return;
+  }
+
+  // Combine the signature from hardware with with the message
+  // and send
+  std::vector<uint8_t> transaction_bytes;
+
+  // TODO(nvonpentz) confirm this step is necessary
+  CompactU16Encode(1, &transaction_bytes);
+
+  // Add signature bytes to transaction
+  transaction_bytes.insert(transaction_bytes.end(), signature.begin(),
+                           signature.end());
+
+  // Add message bytes to transaction
+  auto message_bytes = meta->tx()->message()->Serialize(nullptr);
+  transaction_bytes.insert(transaction_bytes.end(), message_bytes->begin(),
+                           message_bytes->end());
+
+  meta->set_status(mojom::TransactionStatus::Approved);
+  tx_state_manager_->AddOrUpdateTx(*meta);
+
+  // TODO(nvonpentz) - handle case when transaction bytes size is too large
+  // if (transaction_bytes.size() > kSolanaMaxTxSize)
+  //   return "";
+
+  json_rpc_service_->SendSolanaTransaction(
+      base::Base64Encode(transaction_bytes),
+      base::BindOnce(&SolanaTxManager::OnSendSolanaTransaction,
+                     weak_ptr_factory_.GetWeakPtr(), meta->id(),
+                     std::move(callback)));
 }
 
 }  // namespace brave_wallet

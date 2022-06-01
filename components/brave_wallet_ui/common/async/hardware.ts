@@ -12,12 +12,18 @@ import {
 import { StatusCodes as LedgerStatusCodes } from '@ledgerhq/errors'
 import { getLocale } from '../../../common/locale'
 import WalletApiProxy from '../../common/wallet_api_proxy'
-import { getHardwareKeyring, getLedgerEthereumHardwareKeyring, getLedgerFilecoinHardwareKeyring, getTrezorHardwareKeyring, HardwareVendor } from '../api/hardware_keyrings'
+import {
+  getHardwareKeyring,
+  getLedgerEthereumHardwareKeyring,
+  getLedgerFilecoinHardwareKeyring,
+  getLedgerSolanaHardwareKeyring,
+  getTrezorHardwareKeyring,
+  HardwareVendor } from '../api/hardware_keyrings'
 import { TrezorErrorsCodes } from '../hardware/trezor/trezor-messages'
 import TrezorBridgeKeyring from '../hardware/trezor/trezor_bridge_keyring'
 import LedgerBridgeKeyring from '../hardware/ledgerjs/eth_ledger_bridge_keyring'
 import { BraveWallet } from '../../constants/types'
-import { LedgerEthereumKeyring, LedgerFilecoinKeyring } from '../hardware/interfaces'
+import { LedgerEthereumKeyring, LedgerFilecoinKeyring, LedgerSolanaKeyring } from '../hardware/interfaces'
 import { EthereumSignedTx } from 'trezor-connect'
 import { SignedLotusMessage } from '@glif/filecoin-message'
 
@@ -143,6 +149,48 @@ export async function signLedgerFilecoinTransaction (
     return { success: false, error: getLocale('braveWalletProcessTransactionError') }
   }
   return { success: result.status }
+}
+
+export async function signLedgerSolanaTransaction (
+  apiProxy: WalletApiProxy,
+  path: string,
+  txInfo: BraveWallet.TransactionInfo,
+  coin: BraveWallet.CoinType,
+  deviceKeyring: LedgerSolanaKeyring = getLedgerSolanaHardwareKeyring()): Promise<SignHardwareTransactionOperationResult> { 
+    // TODO(nvonpentz) Ensure blockhash set in tx before trying to sign the message.
+    //                 This depends on the flow up to this point. It may have already happened.
+    //                 Since the parallel Ethereum code calls getNonceForHardwareTransaction, I'd
+    //                 guess something similar needs to happen for Solana and the blockhash.
+    //
+    // const nonce = await apiProxy.solanaTxManagerProxy.getNonceForHardwareTransaction(txInfo.id)
+    // if (!nonce || !nonce.nonce) {
+    //   return { success: false, error: getLocale('braveWalletApproveTransactionError') }
+    // }
+    const data = await apiProxy.txService.getTransactionMessageToSign(coin, txInfo.id)
+    if (!data || !data.message) {
+      return { success: false, error: getLocale('braveWalletNoMessageToSignError') }
+    }
+ 
+    const signed = await deviceKeyring.signTransaction(path, data.message)
+    if (!signed || !signed.success || !signed.payload) {
+      const error = signed?.error ?? getLocale('braveWalletSignOnDeviceError')
+      const code = signed?.code ?? ''
+      if (code === 'DisconnectedDeviceDuringOperation') {
+        await deviceKeyring.makeApp()
+      }
+      return { success: false, error: error, code: code }
+    }
+
+    const signedMessage = signed.payload as string
+    if (!signedMessage) {
+      return { success: false }
+    }
+
+    const result = await apiProxy.solanaTxManagerProxy.processSolanaHardwareSignature(txInfo.id, signedMessage)
+    if (!result || !result.status) {
+      return { success: false, error: getLocale('braveWalletProcessTransactionError') }
+    }
+    return { success: result.status }
 }
 
 export async function signMessageWithHardwareKeyring (vendor: HardwareVendor, path: string, messageData: BraveWallet.SignMessageRequest): Promise<SignHardwareMessageOperationResult> {

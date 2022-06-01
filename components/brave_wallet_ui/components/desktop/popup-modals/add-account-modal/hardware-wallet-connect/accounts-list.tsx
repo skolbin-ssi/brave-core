@@ -227,7 +227,7 @@ function AccountListItem (props: AccountListItemProps) {
         .divideByDecimals(selectedNetwork.decimals)
         .format()
       setBalance(formattedBalance)
-    }).catch()
+    }).catch(err => { console.error(`Error fetching balance for address ${account.address}:`, err) })
   }, [account])
 
   return (

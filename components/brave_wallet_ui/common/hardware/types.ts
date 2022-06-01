@@ -7,6 +7,11 @@ export const FilecoinNetworkTypes = [
 ] as const
 export type FilecoinNetwork = typeof FilecoinNetworkTypes[number]
 
+// export const SolanaNetworkTypes = [
+//   BraveWallet.SOLANA_MAINNET, BraveWallet.SOLANA_TESTNET, BraveWallet.SOLANA_DEVNET
+// ] as const
+// export type SolanaNetwork = typeof SolanaNetworkTypes[number]
+
 export type HardwareWalletResponseCodeType =
   | 'deviceNotConnected'
   | 'deviceBusy'
@@ -31,7 +36,7 @@ export type HardwareOperationResult = {
 }
 
 export type SignHardwareTransactionOperationResult = HardwareOperationResult & {
-  payload?: EthereumSignedTx | SignedLotusMessage
+  payload?: EthereumSignedTx | SignedLotusMessage | string // TODO(nvonpentz) - string might not be right here
 }
 
 export type SignHardwareMessageOperationResult = HardwareOperationResult & {

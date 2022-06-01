@@ -36,6 +36,9 @@ class SolanaTxManager : public TxManager, public SolanaBlockTracker::Observer {
                   PrefService* prefs);
   ~SolanaTxManager() override;
 
+  using ProcessSolanaHardwareSignatureCallback =
+      mojom::SolanaTxManagerProxy::ProcessSolanaHardwareSignatureCallback;
+
   // TxManager
   void AddUnapprovedTransaction(mojom::TxDataUnionPtr tx_data_union,
                                 const std::string& from,
@@ -74,6 +77,10 @@ class SolanaTxManager : public TxManager, public SolanaBlockTracker::Observer {
       MakeTokenProgramTransferTxDataCallback callback);
   void GetEstimatedTxFee(const std::string& tx_meta_id,
                          GetEstimatedTxFeeCallback callback);
+  void ProcessSolanaHardwareSignature(
+      const std::string& tx_meta_id,
+      const std::string& signature,
+      ProcessSolanaHardwareSignatureCallback callback);
 
   std::unique_ptr<SolanaTxMeta> GetTxForTesting(const std::string& tx_meta_id);
 

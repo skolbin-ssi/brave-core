@@ -142,6 +142,7 @@ export const HardwareWalletConnect = ({ onSuccess, selectedAccountType }: Props)
       : `${account.hardwareVendor} ${index}${schemeString}`
   }, [accounts, selectedDerivationScheme])
 
+  // called when you import the accounts
   const onAddAccounts = React.useCallback(() => {
     const selectedAccounts = accounts.filter(account => selectedDerivationPaths.includes(account.derivationPath))
     const renamedSelectedAccounts = selectedAccounts

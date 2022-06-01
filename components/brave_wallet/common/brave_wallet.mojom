@@ -884,6 +884,8 @@ interface TxService {
   // Used to retry a transaction
   RetryTransaction(CoinType coin_type, string tx_meta_id) => (bool success, string tx_meta_id, string error_message);
 
+
+  // TODO(nvonpentz) - we should modify the interface to be able to support different return types (e.g. bytes)
   GetTransactionMessageToSign(CoinType coin_type, string tx_meta_id) => (string? message);
 
   // Adds an observer for TxService
@@ -918,6 +920,8 @@ interface SolanaTxManagerProxy {
   // Get transaction data for transfering SOL.
   MakeSystemProgramTransferTxData(string from, string to, uint64 lamports)
       => (SolanaTxData? tx_data, SolanaProviderError error, string error_message);
+
+  ProcessSolanaHardwareSignature(string tx_meta_id, string signed_message) => (bool status, ProviderErrorUnion error_union, string error_message);
 
   // Get transaction data for transfering SPL tokens from one associated token
   // account to another.
