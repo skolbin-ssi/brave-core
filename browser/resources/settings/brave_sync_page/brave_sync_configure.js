@@ -119,6 +119,7 @@ Polymer({
 
   onPermanentlyDeleteSyncAccount_: async function() {
     alert('onPermanentlyDeleteSyncAccount_')
+    await this.browserProxy_.permanentlyDeleteSyncAccount();
   },
 
   onDeleteDevice_: async function(e) {

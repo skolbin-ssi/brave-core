@@ -27,6 +27,9 @@ export class BraveSyncBrowserProxy {
   deleteDevice(deviceId) {
     return sendWithPromise('SyncDeleteDevice', deviceId);
   }
+  permanentlyDeleteSyncAccount(){
+    return sendWithPromise('SyncPermanentlyDeleteAccount');
+  }
 }
 
 addSingletonGetter(BraveSyncBrowserProxy);
