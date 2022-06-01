@@ -117,6 +117,10 @@ Polymer({
     router.navigateTo(router.getRoutes().BRAVE_SYNC);
   },
 
+  onPermanentlyDeleteSyncAccount_: async function() {
+    alert('onPermanentlyDeleteSyncAccount_')
+  },
+
   onDeleteDevice_: async function(e) {
     const messageText = this.i18n('braveSyncDeleteDeviceConfirmation')
     const shouldDeleteDevice = confirm(messageText)
