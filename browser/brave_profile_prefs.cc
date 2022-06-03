@@ -379,12 +379,12 @@ void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry) {
 #endif
 
   // Autocomplete in address bar
-  registry->RegisterBooleanPref(omnibox::kAutocompleteEnabled, true);
-  registry->RegisterBooleanPref(omnibox::kTopSiteSuggestionsEnabled, true);
-  registry->RegisterBooleanPref(omnibox::kBraveSuggestedSiteSuggestionsEnabled,
+  registry->RegisterBooleanPref(kAutocompleteEnabled, true);
+  registry->RegisterBooleanPref(kTopSiteSuggestionsEnabled, true);
+  registry->RegisterBooleanPref(kBraveSuggestedSiteSuggestionsEnabled,
                                 false);
-  registry->RegisterBooleanPref(omnibox::kHistorySuggestionsEnabled, true);
-  registry->RegisterBooleanPref(omnibox::kBookmarkSuggestionsEnabled, true);
+  registry->RegisterBooleanPref(kHistorySuggestionsEnabled, true);
+  registry->RegisterBooleanPref(kBookmarkSuggestionsEnabled, true);
 
   // Password leak detection should be disabled
   registry->SetDefaultPrefValue(

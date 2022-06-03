@@ -18,6 +18,7 @@
 #include "base/test/bind.h"
 #include "base/test/task_environment.h"
 #include "base/time/time.h"
+#include "brave/components/constants/pref_names.h"
 #include "brave/components/omnibox/browser/brave_history_quick_provider.h"
 #include "build/build_config.h"
 #include "components/bookmarks/test/test_bookmark_client.h"
@@ -31,7 +32,6 @@
 #include "components/omnibox/browser/fake_autocomplete_provider.h"
 #include "components/omnibox/browser/fake_autocomplete_provider_client.h"
 #include "components/omnibox/browser/in_memory_url_index.h"
-#include "components/omnibox/browser/omnibox_prefs.h"
 #include "components/omnibox/browser/test_scheme_classifier.h"
 #include "components/omnibox/browser/verbatim_match.h"
 #include "components/prefs/pref_registry_simple.h"
@@ -89,8 +89,8 @@ class BraveHistoryURLProviderTest : public testing::Test,
     client_ = std::make_unique<FakeAutocompleteProviderClient>();
     auto* registry =
         static_cast<TestingPrefServiceSimple*>(client_->GetPrefs())->registry();
-    registry->RegisterBooleanPref(omnibox::kHistorySuggestionsEnabled, true);
-    registry->RegisterBooleanPref(omnibox::kBookmarkSuggestionsEnabled, true);
+    registry->RegisterBooleanPref(kHistorySuggestionsEnabled, true);
+    registry->RegisterBooleanPref(kBookmarkSuggestionsEnabled, true);
 
     CHECK(history_dir_.CreateUniqueTempDir());
     client_->set_history_service(history::CreateHistoryService(
@@ -119,7 +119,7 @@ class BraveHistoryURLProviderTest : public testing::Test,
 };
 
 TEST_F(BraveHistoryURLProviderTest, NoResultsWhenHistoryDisabled) {
-  client_->GetPrefs()->SetBoolean(omnibox::kHistorySuggestionsEnabled, false);
+  client_->GetPrefs()->SetBoolean(kHistorySuggestionsEnabled, false);
 
   autocomplete_->Start(CreateAutocompleteInput("Example"), false);
   if (!autocomplete_->done())
@@ -128,7 +128,7 @@ TEST_F(BraveHistoryURLProviderTest, NoResultsWhenHistoryDisabled) {
 }
 
 TEST_F(BraveHistoryURLProviderTest, ResultsWhenHistorySuggestionsEnabled) {
-  client_->GetPrefs()->SetBoolean(omnibox::kHistorySuggestionsEnabled, true);
+  client_->GetPrefs()->SetBoolean(kHistorySuggestionsEnabled, true);
 
   autocomplete_->Start(CreateAutocompleteInput("Example"), false);
   if (!autocomplete_->done())
@@ -137,7 +137,7 @@ TEST_F(BraveHistoryURLProviderTest, ResultsWhenHistorySuggestionsEnabled) {
 }
 
 TEST_F(BraveHistoryURLProviderTest, URLResultsWhenHistoryDisabled) {
-  client_->GetPrefs()->SetBoolean(omnibox::kHistorySuggestionsEnabled, false);
+  client_->GetPrefs()->SetBoolean(kHistorySuggestionsEnabled, false);
 
   autocomplete_->Start(CreateAutocompleteInput("https://unvisited-url.com/"),
                        false);

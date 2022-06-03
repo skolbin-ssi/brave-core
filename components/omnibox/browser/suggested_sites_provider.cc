@@ -10,9 +10,9 @@
 
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "brave/components/constants/pref_names.h"
 #include "components/omnibox/browser/autocomplete_input.h"
 #include "components/omnibox/browser/autocomplete_provider_client.h"
-#include "components/omnibox/browser/omnibox_prefs.h"
 #include "components/prefs/pref_service.h"
 
 // As from autocomplete_provider.h:
@@ -30,7 +30,7 @@ void SuggestedSitesProvider::Start(const AutocompleteInput& input,
   matches_.clear();
   auto* prefs = client_->GetPrefs();
   if (!prefs ||
-      !prefs->GetBoolean(omnibox::kBraveSuggestedSiteSuggestionsEnabled)) {
+      !prefs->GetBoolean(kBraveSuggestedSiteSuggestionsEnabled)) {
     return;
   }
 

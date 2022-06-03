@@ -9,11 +9,6 @@
 #include "src/components/omnibox/browser/omnibox_prefs.h"
 
 namespace omnibox {
-extern const char kAutocompleteEnabled[];
-extern const char kTopSiteSuggestionsEnabled[];
-extern const char kBraveSuggestedSiteSuggestionsEnabled[];
-extern const char kHistorySuggestionsEnabled[];
-extern const char kBookmarkSuggestionsEnabled[];
 }  // namespace omnibox
 
 #endif  // BRAVE_CHROMIUM_SRC_COMPONENTS_OMNIBOX_BROWSER_OMNIBOX_PREFS_H_

@@ -13,6 +13,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/task_environment.h"
 #include "base/time/time.h"
+#include "brave/components/constants/pref_names.h"
 #include "brave/components/omnibox/browser/brave_fake_autocomplete_provider_client.h"
 #include "brave/components/omnibox/browser/brave_shortcuts_provider.h"
 #include "components/bookmarks/browser/bookmark_model.h"
@@ -21,7 +22,6 @@
 #include "components/omnibox/browser/autocomplete_input.h"
 #include "components/omnibox/browser/autocomplete_match.h"
 #include "components/omnibox/browser/autocomplete_match_type.h"
-#include "components/omnibox/browser/omnibox_prefs.h"
 #include "components/omnibox/browser/shortcuts_backend.h"
 #include "components/omnibox/browser/shortcuts_database.h"
 #include "components/omnibox/browser/shortcuts_provider.h"
@@ -92,13 +92,13 @@ class BraveShortcutsProviderTest : public testing::Test {
 };
 
 TEST_F(BraveShortcutsProviderTest, SuggestionsDisabledNoResults) {
-  prefs()->SetBoolean(omnibox::kHistorySuggestionsEnabled, false);
+  prefs()->SetBoolean(kHistorySuggestionsEnabled, false);
   provider_->Start(CreateAutocompleteInput("hel"), true);
   EXPECT_TRUE(provider_->matches().empty());
 }
 
 TEST_F(BraveShortcutsProviderTest, SuggestionsEnabledHasResults) {
-  prefs()->SetBoolean(omnibox::kHistorySuggestionsEnabled, true);
+  prefs()->SetBoolean(kHistorySuggestionsEnabled, true);
   provider_->Start(CreateAutocompleteInput("hel"), true);
   EXPECT_FALSE(provider_->matches().empty());
 }

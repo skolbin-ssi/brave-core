@@ -18,6 +18,7 @@
 #include "base/run_loop.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/task_environment.h"
+#include "brave/components/constants/pref_names.h"
 #include "components/bookmarks/browser/bookmark_model.h"
 #include "components/bookmarks/test/bookmark_test_helpers.h"
 #include "components/bookmarks/test/test_bookmark_client.h"
@@ -33,7 +34,6 @@
 #include "components/omnibox/browser/history_test_util.h"
 #include "components/omnibox/browser/history_url_provider.h"
 #include "components/omnibox/browser/in_memory_url_index_test_util.h"
-#include "components/omnibox/browser/omnibox_prefs.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
 #include "components/prefs/testing_pref_service.h"
@@ -105,7 +105,7 @@ class BraveHistoryQuickProviderTest : public testing::Test {
     client_ = std::make_unique<FakeAutocompleteProviderClient>();
     auto* registry =
         static_cast<TestingPrefServiceSimple*>(client_->GetPrefs())->registry();
-    registry->RegisterBooleanPref(omnibox::kHistorySuggestionsEnabled, true);
+    registry->RegisterBooleanPref(kHistorySuggestionsEnabled, true);
 
     CHECK(history_dir_.CreateUniqueTempDir());
     client_->set_history_service(
@@ -283,7 +283,7 @@ void BraveHistoryQuickProviderTest::SetShouldContain::operator()(
 }
 
 TEST_F(BraveHistoryQuickProviderTest, HasResultsWhenHistoryEnabled) {
-  client().GetPrefs()->SetBoolean(omnibox::kHistorySuggestionsEnabled, true);
+  client().GetPrefs()->SetBoolean(kHistorySuggestionsEnabled, true);
   std::vector<std::string> expected_urls;
   expected_urls.push_back("http://example.com/");
   // With cursor after "slash", we should retrieve the desired result but it
@@ -292,7 +292,7 @@ TEST_F(BraveHistoryQuickProviderTest, HasResultsWhenHistoryEnabled) {
 }
 
 TEST_F(BraveHistoryQuickProviderTest, HasNoResultsWhenHistoryDisabled) {
-  client().GetPrefs()->SetBoolean(omnibox::kHistorySuggestionsEnabled, false);
+  client().GetPrefs()->SetBoolean(kHistorySuggestionsEnabled, false);
   std::vector<std::string> expected_urls;
   // With cursor after "slash", we should retrieve the desired result but it
   // should not be allowed to be the default match.

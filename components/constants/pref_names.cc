@@ -77,6 +77,15 @@ const char kBraveShieldsSettingsVersion[] = "brave.shields_settings_version";
 const char kDefaultBrowserPromptEnabled[] =
     "brave.default_browser_prompt_enabled";
 
+const char kAutocompleteEnabled[] = "brave.autocomplete_enabled";
+const char kTopSiteSuggestionsEnabled[] = "brave.top_site_suggestions_enabled";
+const char kBraveSuggestedSiteSuggestionsEnabled[] =
+    "brave.brave_suggested_site_suggestions_enabled";
+const char kHistorySuggestionsEnabled[] =
+    "brave.history_suggestions_enabled";
+const char kBookmarkSuggestionsEnabled[] =
+    "brave.bookmark_suggestions_enabled";
+
 const char kWebDiscoveryEnabled[] = "brave.web_discovery_enabled";
 const char kDontAskEnableWebDiscovery[] = "brave.dont_ask_enable_web_discovery";
 const char kBraveSearchVisitCount[] = "brave.brave_search_visit_count";

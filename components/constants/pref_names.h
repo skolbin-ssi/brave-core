@@ -65,6 +65,13 @@ extern const char kBinanceAccessToken[];
 extern const char kBinanceRefreshToken[];
 extern const char kDefaultBrowserPromptEnabled[];
 
+// Omnibox Configuration
+extern const char kAutocompleteEnabled[];
+extern const char kTopSiteSuggestionsEnabled[];
+extern const char kBraveSuggestedSiteSuggestionsEnabled[];
+extern const char kHistorySuggestionsEnabled[];
+extern const char kBookmarkSuggestionsEnabled[];
+
 // Web discovery project
 extern const char kWebDiscoveryEnabled[];
 extern const char kDontAskEnableWebDiscovery[];

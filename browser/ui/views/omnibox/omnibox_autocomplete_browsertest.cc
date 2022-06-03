@@ -15,6 +15,7 @@
 #include "chrome/test/base/in_process_browser_test.h"
 #include "chrome/test/base/ui_test_utils.h"
 #include "components/omnibox/browser/omnibox_edit_model.h"
+#include "components/omnibox/browser/omnibox_prefs.h"
 #include "components/prefs/pref_service.h"
 #include "content/public/test/browser_test.h"
 
@@ -59,12 +60,12 @@ IN_PROC_BROWSER_TEST_F(OmniboxAutocompleteTest, AutocompleteDisabledTest) {
 }
 
 IN_PROC_BROWSER_TEST_F(OmniboxAutocompleteTest, TopSiteSuggestionsEnabledTest) {
-  EXPECT_TRUE(browser()->profile()->GetPrefs()->GetBoolean(
-      kTopSiteSuggestionsEnabled));
+  EXPECT_TRUE(
+      browser()->profile()->GetPrefs()->GetBoolean(kTopSiteSuggestionsEnabled));
 }
 
 IN_PROC_BROWSER_TEST_F(OmniboxAutocompleteTest,
-    BraveSuggestedSiteSuggestionsEnabledTest) {
+                       BraveSuggestedSiteSuggestionsEnabledTest) {
   EXPECT_FALSE(browser()->profile()->GetPrefs()->GetBoolean(
       kBraveSuggestedSiteSuggestionsEnabled));
 }

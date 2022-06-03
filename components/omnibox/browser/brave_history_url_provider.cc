@@ -4,8 +4,8 @@
  * You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 #include "brave/components/omnibox/browser/brave_history_url_provider.h"
+#include "brave/components/constants/pref_names.h"
 #include "components/history/core/browser/history_service.h"
-#include "components/omnibox/browser/omnibox_prefs.h"
 #include "components/prefs/pref_service.h"
 
 BraveHistoryURLProvider::BraveHistoryURLProvider(
@@ -22,7 +22,7 @@ void BraveHistoryURLProvider::Start(const AutocompleteInput& input,
   // navigating to exact urls (i.e. https://example.com/), so we need to disable
   // **ONLY** history searches. Fortunately, Chromium has a flag for this.
   search_url_database_ =
-      client()->GetPrefs()->GetBoolean(omnibox::kHistorySuggestionsEnabled);
+      client()->GetPrefs()->GetBoolean(kHistorySuggestionsEnabled);
 
   HistoryURLProvider::Start(input, minimal_changes);
 }

@@ -152,15 +152,15 @@ const PrefsUtil::TypedPrefMap& BravePrefsUtil::GetAllowlistedKeys() {
       settings_api::PrefType::PREF_TYPE_BOOLEAN;
   (*s_brave_allowlist)[kLocationBarIsWide] =
       settings_api::PrefType::PREF_TYPE_BOOLEAN;
-  (*s_brave_allowlist)[omnibox::kAutocompleteEnabled] =
+  (*s_brave_allowlist)[kAutocompleteEnabled] =
       settings_api::PrefType::PREF_TYPE_BOOLEAN;
-  (*s_brave_allowlist)[omnibox::kTopSiteSuggestionsEnabled] =
+  (*s_brave_allowlist)[kTopSiteSuggestionsEnabled] =
       settings_api::PrefType::PREF_TYPE_BOOLEAN;
-  (*s_brave_allowlist)[omnibox::kBraveSuggestedSiteSuggestionsEnabled] =
+  (*s_brave_allowlist)[kBraveSuggestedSiteSuggestionsEnabled] =
       settings_api::PrefType::PREF_TYPE_BOOLEAN;
-  (*s_brave_allowlist)[omnibox::kHistorySuggestionsEnabled] =
+  (*s_brave_allowlist)[kHistorySuggestionsEnabled] =
       settings_api::PrefType::PREF_TYPE_BOOLEAN;
-  (*s_brave_allowlist)[omnibox::kBookmarkSuggestionsEnabled] =
+  (*s_brave_allowlist)[kBookmarkSuggestionsEnabled] =
       settings_api::PrefType::PREF_TYPE_BOOLEAN;
   (*s_brave_allowlist)[brave_rewards::prefs::kShowButton] =
       settings_api::PrefType::PREF_TYPE_BOOLEAN;
