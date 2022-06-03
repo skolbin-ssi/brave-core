@@ -107,6 +107,9 @@ const test = (passthroughArgs, suite, buildConfig = config.defaultBuildConfig, o
   } else {
     config.buildTarget = suite
   }
+  util.touchOverriddenFiles(/*excludeTests*/false)
+  util.touchOverriddenVectorIconFiles()
+  util.updateBranding()
   util.buildTarget()
 
   // Filter out upstream tests that are known to fail for Brave
