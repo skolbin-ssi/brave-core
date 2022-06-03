@@ -334,7 +334,8 @@ public class BraveNewTabPageLayout extends NewTabPageLayout implements Connectio
                 int insertionPoint =
                         mainLayout.indexOfChild(findViewById(R.id.ntp_middle_spacer)) + 1;
                 if (mMvTilesContainerLayout.getParent() != null) {
-                    ((ViewGroup) mMvTilesContainerLayout.getParent()).removeView(mMvTilesContainerLayout);
+                    ((ViewGroup) mMvTilesContainerLayout.getParent())
+                            .removeView(mMvTilesContainerLayout);
                 }
                 mMvTilesContainerLayout.setBackgroundResource(R.drawable.rounded_dark_bg_alpha);
                 mMvTilesContainerLayout.setLayoutParams(layoutParams);
