@@ -263,7 +263,7 @@ public class Utils {
             case BraveWalletConstants.KOVAN_CHAIN_ID:
             case BraveWalletConstants.LOCALHOST_CHAIN_ID:
             case BraveWalletConstants.MAINNET_CHAIN_ID:
-            case BraveWalletConstants.POLYGON_CHAIN_ID:
+            case BraveWalletConstants.POLYGON_MAINNET_CHAIN_ID:
             case BraveWalletConstants.BINANCE_SMART_CHAIN_MAINNET_CHAIN_ID:
             case BraveWalletConstants.CELO_MAINNET_CHAIN_ID:
             case BraveWalletConstants.AVALANCHE_MAINNET_CHAIN_ID:
@@ -335,7 +335,7 @@ public class Utils {
             case BraveWalletConstants.MAINNET_CHAIN_ID:
                 strNetwork = activity.getText(R.string.mainnet);
                 break;
-            case BraveWalletConstants.POLYGON_CHAIN_ID:
+            case BraveWalletConstants.POLYGON_MAINNET_CHAIN_ID:
                 strNetwork = activity.getText(R.string.polygon);
                 break;
             case BraveWalletConstants.BINANCE_SMART_CHAIN_MAINNET_CHAIN_ID:
@@ -383,7 +383,7 @@ public class Utils {
             case BraveWalletConstants.LOCALHOST_CHAIN_ID:
                 strNetwork = activity.getText(R.string.localhost);
                 break;
-            case BraveWalletConstants.POLYGON_CHAIN_ID:
+            case BraveWalletConstants.POLYGON_MAINNET_CHAIN_ID:
                 strNetwork = activity.getText(R.string.polygon_short);
                 break;
             case BraveWalletConstants.BINANCE_SMART_CHAIN_MAINNET_CHAIN_ID:
@@ -450,7 +450,7 @@ public class Utils {
         } else if (network.equals(activity.getText(R.string.localhost).toString())) {
             return BraveWalletConstants.LOCALHOST_CHAIN_ID;
         } else if (network.equals(activity.getText(R.string.polygon).toString())) {
-            return BraveWalletConstants.POLYGON_CHAIN_ID;
+            return BraveWalletConstants.POLYGON_MAINNET_CHAIN_ID;
         } else if (network.equals(activity.getText(R.string.binance).toString())) {
             return BraveWalletConstants.BINANCE_SMART_CHAIN_MAINNET_CHAIN_ID;
         } else if (network.equals(activity.getText(R.string.celo).toString())) {
